@@ -7,6 +7,7 @@ import Paginate from "../components/util/Paginate";
 import { useSelector } from "react-redux";
 import { bookActions } from "../store/book-slice";
 import BookSearch from "../components/books/BookSearch";
+import { uiActions } from "../store/ui-slice";
 
 const Books = () => {
   const books = useSelector((state) => state.book.books);
@@ -25,6 +26,12 @@ const Books = () => {
   const [pageSize] = useState(20);
 
   useEffect(() => {
+    //check if the page param is a number. if not, dont send any request
+    if (isNaN(page)) {
+      dispatch(bookActions.searchChange(search.slice(1)));
+      dispatch(uiActions.setLoading(false));
+      return;
+    }
     dispatch(bookActions.searchChange(search.slice(1)));
     dispatch(
       fetchBooksData({
@@ -54,10 +61,10 @@ const Books = () => {
   return (
     <React.Fragment>
       <BookSearch />
-      {!loading && !error && (!books || books.length === 0) && (
+      {(!books || books.length === 0) && (
         <p>No books found with these search parameters</p>
       )}
-      {!loading && !error && books.length > 0 && (
+      {books.length > 0 && (
         <React.Fragment>
           <BookList books={books} />
           <Paginate
