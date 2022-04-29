@@ -17,7 +17,7 @@ const Books = () => {
   const loading = useAppSelector((state) => state.ui.loading);
   const error = useAppSelector((state) => state.ui.error);
   const dispatch = useDispatch();
-  const appDispatch= useAppDispatch()
+  const appDispatch = useAppDispatch();
 
   const history = useHistory();
   const { page } = useParams<{ page: string }>();
@@ -28,16 +28,18 @@ const Books = () => {
     return React.useMemo(() => new URLSearchParams(search), [search]);
   }
   let query = useQuery();
-  const searchParam = query.get("q");
+  const searchParam = query.get("q") || "";
 
   useEffect(() => {
-    //check if the page param is a number. if not, dont send any request
+    appDispatch(bookActions.searchChange(searchParam));
+
+    //check if the page param is a number. if not, dont send any request and redirect to /books/1
     if (isNaN(+page)) {
-      appDispatch(bookActions.searchChange(searchParam));
       appDispatch(uiActions.setLoading(false));
+      history.push({ pathname: `/books/1` });
       return;
     }
-    appDispatch(bookActions.searchChange(searchParam));
+
     dispatch(
       fetchBooksData({
         page: +page,
@@ -45,7 +47,7 @@ const Books = () => {
       })
     );
     appDispatch(bookActions.setCurrentPage(+page));
-  }, [page, dispatch, appDispatch, searchParam]);
+  }, [page, dispatch, appDispatch, searchParam, history]);
 
   const onPageChange = (pageNumber: number) => {
     appDispatch(bookActions.setCurrentPage(pageNumber));

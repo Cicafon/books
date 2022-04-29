@@ -30,7 +30,7 @@ const BookSearchWrapper = styled.div`
 `;
 
 const BookSearch:React.FC = () => {
-  const searchField = useAppSelector((state: any) => state.book.searchField);
+  const searchField = useAppSelector((state) => state.book.searchField);
   const dispatch = useAppDispatch();
   const history = useHistory();
 
@@ -51,7 +51,7 @@ const BookSearch:React.FC = () => {
         id="outlined-basic"
         label="Search"
         variant="outlined"
-        value={searchField}
+        value={searchField || ""}
         onChange={onSearchChange}
       />
       <Button variant="contained" size="large" onClick={searchHandler}>

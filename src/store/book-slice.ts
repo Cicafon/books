@@ -3,7 +3,7 @@ import { Book } from "../models";
 
 interface InitialBookStateType {
   books: Book[];
-  searchField: string | null;
+  searchField: string ;
   currentPage: number;
   pageCount: number;
 }
@@ -19,7 +19,7 @@ const bookSlice = createSlice({
   name: "book",
   initialState: initialBookState,
   reducers: {
-    searchChange(state, action: PayloadAction<string | null>) {
+    searchChange(state, action: PayloadAction<string>) {
       state.searchField = action.payload;
     },
     replaceBooks(state, action:PayloadAction<Book[]>) {
