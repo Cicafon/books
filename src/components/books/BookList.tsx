@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Book } from "../../models";
 import BookItem from "./BookItem";
 
 const BookListWrapper = styled.ul`
@@ -8,7 +9,7 @@ const BookListWrapper = styled.ul`
   padding: 0;
 `;
 
-const BookList = ({ books }) => {
+const BookList:React.FC<{books: Book[]}> = ({ books }) => {
   return (
     <BookListWrapper>
       {books && books.map((book) => <BookItem key={book.id} book={book} />)}

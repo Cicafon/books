@@ -33,7 +33,7 @@ const StyledHeader = styled.header`
   }
 `;
 
-const Navigation = () => {
+const Navigation:React.FC = () => {
   return (
     <StyledHeader>
       <h1>

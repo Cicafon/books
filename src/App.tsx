@@ -4,7 +4,6 @@ import NotFound from "./pages/NotFound";
 import { Switch, Route, Redirect } from "react-router-dom";
 
 function App() {
-
   return (
     <Layout>
       <Switch>

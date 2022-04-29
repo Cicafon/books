@@ -4,49 +4,54 @@ import { useHistory, useParams, useLocation } from "react-router-dom";
 import BookList from "../components/books/BookList";
 import { fetchBooksData } from "../store/api-actions";
 import Paginate from "../components/util/Paginate";
-import { useSelector } from "react-redux";
 import { bookActions } from "../store/book-slice";
 import BookSearch from "../components/books/BookSearch";
 import { uiActions } from "../store/ui-slice";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 const Books = () => {
-  const books = useSelector((state) => state.book.books);
-  const searchField = useSelector((state) => state.book.searchField);
-  const pageCount = useSelector((state) => state.book.pageCount);
-  const currentPage = useSelector((state) => state.book.currentPage);
-  const loading = useSelector((state) => state.ui.loading);
-  const error = useSelector((state) => state.ui.error);
+  const books = useAppSelector((state) => state.book.books);
+  const searchField = useAppSelector((state) => state.book.searchField);
+  const pageCount = useAppSelector((state) => state.book.pageCount);
+  const currentPage = useAppSelector((state) => state.book.currentPage);
+  const loading = useAppSelector((state) => state.ui.loading);
+  const error = useAppSelector((state) => state.ui.error);
   const dispatch = useDispatch();
+  const appDispatch= useAppDispatch()
 
   const history = useHistory();
-  const params = useParams();
-  const location = useLocation();
-  const { search } = location;
-  const { page } = params;
+  const { page } = useParams<{ page: string }>();
   const [pageSize] = useState(20);
+
+  function useQuery() {
+    const { search } = useLocation();
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+  }
+  let query = useQuery();
+  const searchParam = query.get("q");
 
   useEffect(() => {
     //check if the page param is a number. if not, dont send any request
-    if (isNaN(page)) {
-      dispatch(bookActions.searchChange(search.slice(1)));
-      dispatch(uiActions.setLoading(false));
+    if (isNaN(+page)) {
+      appDispatch(bookActions.searchChange(searchParam));
+      appDispatch(uiActions.setLoading(false));
       return;
     }
-    dispatch(bookActions.searchChange(search.slice(1)));
+    appDispatch(bookActions.searchChange(searchParam));
     dispatch(
       fetchBooksData({
-        page: page,
-        filters: search ? [{ type: "all", values: [search.slice(1)] }] : null,
+        page: +page,
+        filters: searchParam ? [{ type: "all", values: [searchParam] }] : null,
       })
     );
-    dispatch(bookActions.setCurrentPage(page));
-  }, [page, dispatch, search]);
+    appDispatch(bookActions.setCurrentPage(+page));
+  }, [page, dispatch, appDispatch, searchParam]);
 
-  const onPageChange = (pageNumber) => {
-    dispatch(bookActions.setCurrentPage(pageNumber));
+  const onPageChange = (pageNumber: number) => {
+    appDispatch(bookActions.setCurrentPage(pageNumber));
     history.push({
       pathname: `/books/${pageNumber}`,
-      search: searchField || null,
+      search: searchField ? `q=${searchField}` : undefined,
     });
   };
 

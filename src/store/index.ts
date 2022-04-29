@@ -2,8 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import bookSlice from "./book-slice";
 import uiSlice from "./ui-slice";
 
-const store = configureStore({
+export const store = configureStore({
   reducer: { book: bookSlice, ui: uiSlice },
 });
 
-export default store;
+
+export type RootState = ReturnType<typeof store.getState>
+
+export type AppDispatch = typeof store.dispatch

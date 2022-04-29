@@ -1,19 +1,18 @@
-import React from "react";
 import Navigation from "./Navigation";
 import styled from "styled-components";
 
 const StyledMain = styled.main`
-max-width: 80rem;
-text-align: center;
-margin: 10rem auto 2rem auto;
+  max-width: 80rem;
+  text-align: center;
+  margin: 10rem auto 2rem auto;
 `;
 
-const Layout = (props) => {
+const Layout: React.FC<{children: React.ReactNode}> = (props) => {
   return (
-    <React.Fragment>
+    <>
       <Navigation />
       <StyledMain>{props.children}</StyledMain>
-    </React.Fragment>
+    </>
   );
 };
 

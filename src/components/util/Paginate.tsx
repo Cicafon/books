@@ -8,7 +8,14 @@ const PaginationWrapper = styled.div`
   margin-bottom: 1rem;
 `;
 
-const Paginate = (props) => {
+interface PaginateProps {
+  totalCount: number;
+  pageSize: number;
+  currentPage: number;
+  onPageChange: (value: number) => void;
+}
+
+const Paginate: React.FC<PaginateProps> = (props) => {
   const totalPageCount = Math.ceil(props.totalCount / props.pageSize);
   const pageNumbers = [];
   for (let i = 1; i <= totalPageCount; i++) {

@@ -1,8 +1,9 @@
 import { brown } from "@mui/material/colors";
-import { Component } from "react";
-import styled from "styled-components";
 
-const StyledListItem = styled.li`
+import styled from "styled-components";
+import { Book } from "../../models";
+
+const BookItemWrapper = styled.li`
   box-shadow: 0 0 0.25rem 0 ${brown[700]};
   background-color: white;
   padding: 1rem;
@@ -18,17 +19,15 @@ const StyledListItem = styled.li`
   }
 `;
 
-class BookItem extends Component {
-  render() {
-    const { book } = this.props;
+const BookItem: React.FC<{book: Book}> = ({book}) => {
     return (
-      <StyledListItem>
+      <BookItemWrapper>
         <p>{`Author(s): ${book.author.join(", ")}`}</p>
         <h3>{book.title}</h3>
         <p>{`${book.year}  ${book.country}, ${book.city}, ${book.pages} pages`}</p>
-      </StyledListItem>
+      </BookItemWrapper>
     );
   }
-}
+
 
 export default BookItem;

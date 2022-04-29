@@ -1,6 +1,6 @@
 import { TextField, Button } from "@mui/material";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useHistory } from "react-router-dom";
 import { bookActions } from "../../store/book-slice";
 import styled from "styled-components";
@@ -29,12 +29,12 @@ const BookSearchWrapper = styled.div`
   }
 `;
 
-const BookSearch = () => {
-  const searchField = useSelector((state) => state.book.searchField);
-  const dispatch = useDispatch();
+const BookSearch:React.FC = () => {
+  const searchField = useAppSelector((state: any) => state.book.searchField);
+  const dispatch = useAppDispatch();
   const history = useHistory();
 
-  const onSearchChange = (e) => {
+  const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(bookActions.searchChange(e.target.value));
   };
 
@@ -42,7 +42,7 @@ const BookSearch = () => {
     dispatch(bookActions.setCurrentPage(1));
     history.push({
       pathname: `/books/${1}`,
-      search: searchField || null,
+      search: searchField ? `q=${searchField}` : undefined,
     });
   };
   return (
