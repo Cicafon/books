@@ -21,11 +21,11 @@ steps:
   displayName: 'npm build'
 - task: CopyFiles@2
   inputs:
-    targetFolder: '$(Build.ArtifactStagingDirectory)'    
+    targetFolder: 'build'    
  
 - task: PublishBuildArtifacts@1    
   displayName: 'Publish Artifact: drop'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    PathtoPublish: 'build'
     ArtifactName: 'drop'
     publishLocation: 'Container'
