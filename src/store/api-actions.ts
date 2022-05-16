@@ -17,7 +17,7 @@ export const fetchBooksData = (params: FetchBookParamType) => {
         year: i.book_publication_year,
         country: i.book_publication_country,
         city: i.book_publication_city,
-        pages: 21,
+        pages: i.book_pages,
       }));
 
       dispatch(bookActions.replaceBooks(convertedBooksData));

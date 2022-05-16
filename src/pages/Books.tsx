@@ -52,7 +52,7 @@ const Books = () => {
   const onPageChange = (pageNumber: number) => {
     appDispatch(bookActions.setCurrentPage(pageNumber));
     history.push({
-      pathname: `/books/${pageNumber}/`,
+      pathname: `/books/${pageNumber}`,
       search: searchField ? `q=${searchField}` : undefined,
     });
   };
