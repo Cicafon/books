@@ -16,9 +16,9 @@ const BookSearchWrapper = styled.div`
   }
   input {
     width: 30rem;
-    background-color:white;
+    background-color: white;
   }
-  
+
   @media (min-width: 600px) {
     flex-direction: row;
     margin: 2rem 1rem 3rem 1rem;
@@ -29,7 +29,7 @@ const BookSearchWrapper = styled.div`
   }
 `;
 
-const BookSearch:React.FC = () => {
+const BookSearch: React.FC = () => {
   const searchField = useAppSelector((state) => state.book.searchField);
   const dispatch = useAppDispatch();
   const history = useHistory();
@@ -46,7 +46,11 @@ const BookSearch:React.FC = () => {
     });
   };
   return (
-    <BookSearchWrapper>
+    <BookSearchWrapper
+      onKeyPress={({ key }) => {
+        if (key === "Enter") searchHandler();
+      }}
+    >
       <TextField
         id="outlined-basic"
         label="Search"

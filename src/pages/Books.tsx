@@ -36,7 +36,7 @@ const Books = () => {
     //check if the page param is a number. if not, dont send any request and redirect to /books/1
     if (isNaN(+page)) {
       appDispatch(uiActions.setLoading(false));
-      history.push({ pathname: `/books/1` });
+      history.push({ pathname: `/books/1/` });
       return;
     }
 
@@ -52,7 +52,7 @@ const Books = () => {
   const onPageChange = (pageNumber: number) => {
     appDispatch(bookActions.setCurrentPage(pageNumber));
     history.push({
-      pathname: `/books/${pageNumber}`,
+      pathname: `/books/${pageNumber}/`,
       search: searchField ? `q=${searchField}` : undefined,
     });
   };
