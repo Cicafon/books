@@ -16,6 +16,8 @@ jobs:
     name: Build and Deploy Job
     steps:
       - uses: actions/checkout@v2
+      - run: npm i 
+      - run: npm test 
         with:
           submodules: true
       - name: Build And Deploy
