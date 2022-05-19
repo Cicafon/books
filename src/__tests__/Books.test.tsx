@@ -70,13 +70,13 @@ describe("Books", () => {
           <Books />
         </Provider>
       );
-
       await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
     });
     it("renders list", () => {
       const items = screen.getAllByRole("listitem");
       expect(items.length).toBeGreaterThan(0);
     });
+
     it("renders list item: authors, title and details", () => {
       const items = screen.getAllByRole("listitem");
       const { getByText } = within(items[0]);
@@ -89,11 +89,11 @@ describe("Books", () => {
       expect(details).toBeInTheDocument();
     });
 
-    //search field
     it("renders search button", () => {
       const button = screen.getByRole("button", { name: "Search" });
       expect(button).toBeInTheDocument();
     });
+
     it("renders search field (label and value)", () => {
       const label = screen.getByLabelText("Search");
       const searchInput = screen.getByDisplayValue("searchtest");
@@ -118,7 +118,6 @@ describe("Books", () => {
           }
         )
       );
-
       render(
         <Provider store={store}>
           <Books />
@@ -150,7 +149,6 @@ describe("Books", () => {
           }
         )
       );
-
       render(
         <Provider store={store}>
           <Books />
